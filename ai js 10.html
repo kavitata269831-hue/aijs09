@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        container {
+    text-align: center;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    margin: 5px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+#click-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+#click-btn:hover {
+    background-color: #0056b3;
+}
+
+#reset-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+#reset-btn:hover {
+    background-color: #a71d2a;
+}
+  .quiz-container {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .question {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option {
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .option:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .timer {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: #ff5722;
+        }
+
+        .result {
+            font-size: 1.5em;
+            color: #4caf50;
+            display: none;
+        }
+
+        .restart-btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .restart-btn:hover {
+            background-color: #0056b3;
+        }
+        drag-box {
+        width: 100px;
+        height: 100px;
+        background-color: #f44336; 
+        margin: 10px;
+        cursor: pointer;
+    }
+    .drop-zone {
+        width: 150px;
+        height: 150px;
+        border: 2px dashed #4CAF50; 
+        padding: 10px;
+        margin: 10px;
+    }
+    .drop-zone.hover {
+        background-color: #e0e0e0; 
+    }
+    </style>
+</head>
+<body>
+    <h1>MINI PROJECT 1</h1>
+    <h3>Click Counter App</h3>
+    <div class="container">
+        <h1 id="count">0</h1>
+        <button id="click-btn">Click Me</button>
+        <button id="reset-btn">Reset</button>
+    </div>
+    <script>
+
+const countDisplay = document.getElementById('count');
+const clickBtn = document.getElementById('click-btn');
+const resetBtn = document.getElementById('reset-btn');
+let count = 0;
+function updateDisplay() {
+    countDisplay.textContent = count;
+}
+clickBtn.addEventListener('click', () => {
+    count++;
+    updateDisplay();
+});
+
+resetBtn.addEventListener('click', () => {
+    count = 0;
+    updateDisplay();
+});
+updateDisplay();
+
+    </script><hr><hr>
+<h1>MINI PROJECT 2</h1>
+<h3>Image Preview Before Uploadung </h3>
+<input type="file" accept="image/*" id="fileInput">
+<img id="imagePreview" src="vetri.jpeg" alt="Image Preview" style="max-width: 300px; display: none;">
+<script>
+    const fileInput = document.getElementById('fileInput');
+const imagePreview = document.getElementById('imagePreview');
+
+fileInput.addEventListener('change', function(event) {
+  const file = event.target.files[0]; 
+
+  if (file) {
+    const objectUrl = URL.createObjectURL(file);
+    imagePreview.src = objectUrl;
+    imagePreview.style.display = 'block';
+    imagePreview.onload = function() {
+      URL.revokeObjectURL(objectUrl);
+    };
+  } else {
+    imagePreview.src = '';
+    imagePreview.style.display = 'none';
+  }
+});
+
+</script><hr><hr>
+<h1>MINI PROJECT 3</h1>
+<h3>Keyboard Shortcut Trigger</h3>
+<input id="myInput" value="Some text..">
+<button id="myBtn" onclick="javascript:alert('Hello World!')">Button</button>
+
+<script>
+var input = document.getElementById("myInput");
+input.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    document.getElementById("myBtn").click();
+  }
+});
+</script><hr><hr>
+<h1>MINI PROJECT 4</h1>
+<h3>Quiz App With Live</h3>
+<div class="quiz-container">
+        <div class="timer">Time Left: <span id="time">30</span>s</div>
+        <div class="question">Question will appear here</div>
+        <div class="options"></div>
+        <div class="result">Your score: <span id="score">0</span></div>
+        <button class="restart-btn">Restart Quiz</button>
+    </div>
+<script>
+    const quizData = [
+            {
+                question: "What is the capital of France?",
+                options: ["Berlin", "Madrid", "Paris", "Lisbon"],
+                answer: "Paris"
+            },
+            {
+                question: "Which language is used for web development?",
+                options: ["Python", "HTML", "Java", "C++"],
+                answer: "HTML"
+            },
+            {
+                question: "Who wrote 'Hamlet'?",
+                options: ["Charles Dickens", "William Shakespeare", "Mark Twain", "Jane Austen"],
+                answer: "William Shakespeare"
+            },
+            {
+                question: "What is the largest planet in our solar system?",
+                options: ["Earth", "Mars", "Jupiter", "Saturn"],
+                answer: "Jupiter"
+            },
+            {
+                question: "Which country is known as the Land of the Rising Sun?",
+                options: ["China", "Japan", "South Korea", "India"],
+                answer: "Japan"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let timeLeft = 30;
+        let timerInterval;
+        const timerEl = document.getElementById('time');
+        const questionEl = document.querySelector('.question');
+        const optionsEl = document.querySelector('.options');
+        const resultEl = document.querySelector('.result');
+        const scoreEl = document.getElementById('score');
+        const restartBtn = document.querySelector('.restart-btn');
+        function loadQuestion() {
+            if (currentQuestion >= quizData.length) {
+                endQuiz();
+                return;
+            }
+            clearInterval(timerInterval);
+            timeLeft = 30;
+            timerEl.textContent = timeLeft;
+            startTimer();
+            const currentQuiz = quizData[currentQuestion];
+            questionEl.textContent = currentQuiz.question;
+            optionsEl.innerHTML = ''; 
+            currentQuiz.options.forEach(option => {
+                const button = document.createElement('button');
+                button.classList.add('option');
+                button.textContent = option;
+                button.onclick = () => checkAnswer(option);
+                optionsEl.appendChild(button);
+            });
+        }
+        function checkAnswer(selectedOption) {
+            if (selectedOption === quizData[currentQuestion].answer) {
+                score++;
+            }
+            currentQuestion++;
+            loadQuestion();
+        }
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerEl.textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    endQuiz();
+                }
+            }, 1000);
+        }
+        function endQuiz() {
+            clearInterval(timerInterval);
+            questionEl.style.display = 'none';
+            optionsEl.style.display = 'none';
+            resultEl.style.display = 'block';
+            scoreEl.textContent = score;
+            restartBtn.style.display = 'block';
+        }
+        restartBtn.addEventListener('click', () => {
+            
+            currentQuestion = 0;
+            score = 0;
+            timeLeft = 30;
+            timerEl.textContent = timeLeft;
+            questionEl.style.display = 'block';
+            optionsEl.style.display = 'flex'; 
+            resultEl.style.display = 'none';
+            restartBtn.style.display = 'none';
+            loadQuestion();
+        });
+loadQuestion();
+</script><hr><hr>
+<h1>MINI PROJECT 5</h1>
+<h3>Drag and Drop Box </h3>
+<div class="drop-zone" id="zone1">Zone 1</div>
+<div class="drop-zone" id="zone2">Zone 2</div>
+<div class="drag-box" id="dragbox1" draggable="true">Box 1</div>
+<script>
+    const dragBox = document.getElementById('dragbox1');
+const dropZones = document.querySelectorAll('.drop-zone');
+
+// 1. Event listener for the draggable element
+dragBox.addEventListener('dragstart', dragStart);
+
+function dragStart(event) {
+    // Set the data to be transferred (in this case, the ID of the element)
+    event.dataTransfer.setData('text/plain', event.target.id);
+    event.dataTransfer.effectAllowed = 'move'; // Visual effect
+}
+
+// 2. Event listeners for the drop targets
+dropZones.forEach(zone => {
+    zone.addEventListener('dragover', dragOver);
+    zone.addEventListener('drop', drop);
+    zone.addEventListener('dragenter', dragEnter);
+    zone.addEventListener('dragleave', dragLeave);
+});
+
+function dragEnter(event) {
+    
+    if (event.target.classList.contains('drop-zone')) {
+        event.target.classList.add('hover');
+    }
+}
+
+function dragLeave(event) {
+    
+    if (event.target.classList.contains('drop-zone')) {
+        event.target.classList.remove('hover');
+    }
+}
+
+function dragOver(event) {
+    event.preventDefault();
+}
+
+function drop(event) {
+    event.preventDefault(); 
+    const data = event.dataTransfer.getData('text/plain');
+    const draggedElement = document.getElementById(data);
+    event.target.appendChild(draggedElement);
+    event.target.classList.remove('hover');
+}
+
+</script><hr><hr>
+<h1>MINI PROJECT 6</h1>
+<h3>Keyboard Event: Real-Time Key Logger </h3>
+<p>Focus on the input field or anywhere on the page and start typing to log events.</p>
+    <input type="text" placeholder="Type here...">
+    <p>Logged Events:</p>
+    <textarea id="logTextarea" readonly></textarea>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const logTextarea = document.getElementById('logTextarea');
+    const inputElement = document.querySelector('input');
+
+    function logEvent(message) {
+        const now = new Date();
+        const timeString = now.toLocaleTimeString();
+        logTextarea.value += `[${timeString}] ${message}\n`;
+
+        logTextarea.scrollTop = logTextarea.scrollHeight;
+    }
+    window.addEventListener('keydown', (event) => {
+        logEvent(`KeyDown: Key "${event.key}" pressed. Ctrl held: ${event.ctrlKey}, Shift held: ${event.shiftKey}`);
+    });
+    window.addEventListener('keyup', (event) => {
+        logEvent(`KeyUp: Key "${event.key}" released.`);
+    });
+    inputElement.addEventListener('input', (event) => {
+        logEvent(`Input field updated. Current value: "${event.target.value}"`);
+    });
+});
+
+</script>
+</body>
+</html>
