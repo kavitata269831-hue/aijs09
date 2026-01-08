@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS MINI PROJECT -9</title>
+    <style>
+        root {
+    --bg-color: #ffffff;
+    --text-color: #000000;
+}
+html[data-theme="dark"] {
+    --bg-color: #000000;
+    --text-color: #ffffff;
+}
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s; 
+}
+body.light-theme {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+body.dark-theme {
+    background-color: #2c2c2c;
+    color: #ffffff;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    text-align: center;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    background-color: #007bff;
+    color: #ffffff;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+    </style>
+</head>
+<body>
+    <h1>MINI PROJECT 1</h1>
+    <h3>Light/Dark Mode Toggle</h3>
+    <button id="theme-toggle">Toggle Theme</button>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const htmlElement = document.documentElement; 
+    function setTheme(theme) {
+        htmlElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme); 
+    }
+
+    function toggleTheme() {
+        const currentTheme = htmlElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        setTheme(newTheme);
+    }
+    const storedTheme = localStorage.getItem('theme');
+    if (storedTheme) {
+        setTheme(storedTheme);
+    } else {
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (prefersDark) {
+            setTheme('dark');
+        } else {
+            setTheme('light'); 
+        }
+    }
+    themeToggleBtn.addEventListener('click', toggleTheme);
+});
+
+    </script><hr><hr>
+<h1>MINI PROJECT 2</h1>
+<h3>Stop Watch Timer</h3>
+<div class="stopwatch">
+  <div id="display">00:00:00</div>
+  <button id="startBtn">Start</button>
+  <button id="stopBtn">Stop</button>
+  <button id="resetBtn">Reset</button>
+</div>
+<script>
+    let startTime;
+let elapsedTime = 0;
+let timerInterval;
+
+const display = document.getElementById("display");
+
+function timeToString(time) {
+  let diffInHrs = time / 3600000;
+  let hh = Math.floor(diffInHrs);
+
+  let diffInMin = (diffInHrs - hh) * 60;
+  let mm = Math.floor(diffInMin);
+
+  let diffInSec = (diffInMin - mm) * 60;
+  let ss = Math.floor(diffInSec);
+  let formattedMM = mm.toString().padStart(2, "0");
+  let formattedSS = ss.toString().padStart(2, "0");
+  let formattedHH = hh.toString().padStart(2, "0");
+
+  return `${formattedHH}:${formattedMM}:${formattedSS}`;
+}
+
+function start() {
+  startTime = Date.now() - elapsedTime;
+  timerInterval = setInterval(function printTime() {
+    elapsedTime = Date.now() - startTime;
+    display.innerHTML = timeToString(elapsedTime);
+  }, 1000); 
+}
+
+function stop() {
+  clearInterval(timerInterval);
+}
+
+function reset() {
+  stop();
+  display.innerHTML = "00:00:00";
+  elapsedTime = 0;
+}
+document.getElementById("startBtn").addEventListener("click", start);
+document.getElementById("stopBtn").addEventListener("click", stop);
+document.getElementById("resetBtn").addEventListener("click", reset);
+
+</script><hr><hr>
+<h1>MINI PROJECT 3</h1>
+<h3>Live Search Filter</h3>
+<input type="text" id="search-box" placeholder="Start typing..." />
+<ul id="user-list">
+    <li>Laptop</li>
+    <li>Mobile phone </li>
+    <li>Smart Watches</li>
+    <li>Widgets </li>
+</ul>
+<script>
+    const searchBox = document.getElementById("search-box");
+const userList = document.getElementById("user-list");
+const users = userList.getElementsByTagName("li"); 
+
+searchBox.addEventListener("input", function () {
+    const query = this.value.toLowerCase();
+
+    for (let user of users) {
+        const text = user.textContent.toLowerCase();
+        user.style.display = text.includes(query) ? "block" : "none";
+    }
+});
+
+</script><HR><HR>
+<h1>MINI PROJECT 4</h1>
+<h3>Dynamic Theme Switcher</h3>
+ <div class="container">
+        <h1>Dynamic Theme Switcher</h1>
+        <button id="theme-toggle">Switch Theme</button>
+        <p>Toggle between light and dark themes using the button above.</p>
+    </div>
+<script>
+    const themeToggleBtn = document.getElementById('theme-toggle');
+const currentTheme = localStorage.getItem('theme') || 'light-theme';
+document.body.classList.add(currentTheme);
+function toggleTheme() {
+    const newTheme = document.body.classList.contains('light-theme') ? 'dark-theme' : 'light-theme';
+    document.body.classList.remove('light-theme', 'dark-theme');
+    document.body.classList.add(newTheme);
+    localStorage.setItem('theme', newTheme);
+}
+themeToggleBtn.addEventListener('click', toggleTheme);
+</script><hr><hr>
+<h1>MINI PROJECT 5</h1>
+<H3>Tpo-Do-List App</H3>
+<div id="myDIV" class="header">
+  <h2 style="margin:5px">My To Do List</h2>
+  <input type="text" id="myInput" placeholder="Title...">
+  <span onclick="newElement()" class="addBtn">Add</span>
+</div>
+
+<ul id="myUL">
+  <li>Hit the gym</li>
+  <li class="checked">Pay bills</li>
+  <li>Meet George</li>
+  <li>Buy eggs</li>
+  <li>Read a book</li>
+  <li>Organize office</li>
+</ul>
+
+<script>
+// Create a "close" button and append it to each list item
+var myNodelist = document.getElementsByTagName("LI");
+var i;
+for (i = 0; i < myNodelist.length; i++) {
+  var span = document.createElement("SPAN");
+  var txt = document.createTextNode("\u00D7");
+  span.className = "close";
+  span.appendChild(txt);
+  myNodelist[i].appendChild(span);
+}
+
+// Click on a close button to hide the current list item
+var close = document.getElementsByClassName("close");
+var i;
+for (i = 0; i < close.length; i++) {
+  close[i].onclick = function() {
+    var div = this.parentElement;
+    div.style.display = "none";
+  }
+}
+
+// Add a "checked" symbol when clicking on a list item
+var list = document.querySelector('ul');
+list.addEventListener('click', function(ev) {
+  if (ev.target.tagName === 'LI') {
+    ev.target.classList.toggle('checked');
+  }
+}, false);
+
+// Create a new list item when clicking on the "Add" button
+function newElement() {
+  var li = document.createElement("li");
+  var inputValue = document.getElementById("myInput").value;
+  var t = document.createTextNode(inputValue);
+  li.appendChild(t);
+  if (inputValue === '') {
+    alert("You must write something!");
+  } else {
+    document.getElementById("myUL").appendChild(li);
+  }
+  document.getElementById("myInput").value = "";
+
+  var span = document.createElement("SPAN");
+  var txt = document.createTextNode("\u00D7");
+  span.className = "close";
+  span.appendChild(txt);
+  li.appendChild(span);
+
+  for (i = 0; i < close.length; i++) {
+    close[i].onclick = function() {
+      var div = this.parentElement;
+      div.style.display = "none";
+    }
+  }
+}
+</script><hr><hr>
+<h1>MIN I PROJECT 6</h1>
+<h3>Word Counter</h3>
+<textarea id="inputField" placeholder="Type here..."></textarea>
+<p>Words: <span id="wordCount">0</span></p>
+<script>
+    const textArea = document.getElementById('inputField');
+const wordCountDisplay = document.getElementById('wordCount');
+
+textArea.addEventListener('input', () => {
+  const text = textArea.value;
+  const count = text.trim().split(/\s+/).filter(item => item !== "").length;
+  wordCountDisplay.textContent = count;
+});
+
+</script><hr><hr>
+</body>
+</html>
